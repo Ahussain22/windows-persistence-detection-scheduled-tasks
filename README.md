@@ -144,4 +144,119 @@ Task Scheduler logging was initially disabled and had to be enabled to capture E
 This lab shows:
 - Understanding of attacker persistence techniques  
 - Ability to detect suspicious behaviour  
-- Real-world Blue Team skills  
+- Real-world Blue Team skills
+
+# 🛡️ Blue Team Lab: Detecting Registry Persistence (Startup Programs)
+
+## 🎯 Objective
+Learn how attackers maintain access using Windows Registry startup keys, and how to detect this persistence technique as a Blue Team analyst.
+
+---
+
+## 🧠 What is Registry Persistence? (Simple Explanation)
+Registry persistence is when an attacker adds a program to run automatically every time a user logs into Windows.
+
+Instead of using scheduled tasks, attackers store their program in:
+- Windows startup registry keys
+
+This makes the program execute silently in the background at login.
+
+---
+
+## 💻 Lab Setup
+- Windows 10 VM  
+- Command Prompt (Administrator)  
+- Registry Editor (regedit)  
+
+---
+
+## 🧪 Step 1 — Simulate Attacker Behaviour
+
+Run:
+
+    reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v Updater /t REG_SZ /d "calc.exe" /f
+
+### What this does:
+- Creates a registry entry called "Updater"
+- Stores it in a startup location
+- Executes calc.exe every time the user logs in
+
+In a real attack, this would likely be malware instead of calc.exe.
+![CMD Reg](./images/cmdreg.png)
+---
+
+## 🔎 Step 2 — Verify the Registry Entry
+
+Run:
+
+    reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+
+### Example Output:
+
+    Updater    REG_SZ    calc.exe
+![CMD Reg](./images/cmdreg1.png)
+---
+
+## 🔍 Step 3 — Detect Using Registry Editor (GUI)
+
+1. Press Win + R  
+2. Type:
+
+    regedit
+
+3. Navigate to:
+
+    HKEY_CURRENT_USER
+    → Software
+    → Microsoft
+    → Windows
+    → CurrentVersion
+    → Run
+
+Look for:
+Updater
+![Reg Edit](./images/regedit.png)
+---
+
+## 🚨 Step 4 — Why This is Suspicious
+
+Indicators of compromise:
+
+- Runs automatically at login  
+- Generic name "Updater"  
+- Executes a program via registry  
+- No clear or legitimate purpose  
+
+---
+
+## 🧠 Analyst Explanation
+
+A registry entry named "Updater" was identified in the Windows startup key, configured to execute calc.exe upon user login. This behaviour is suspicious, as attackers commonly use registry run keys to establish persistence and maintain access to a system after compromise.
+
+---
+
+## 🚀 Key Takeaways
+
+- Attackers use registry keys for persistence  
+- Startup programs can execute automatically at login  
+- Registry-based persistence is harder to detect than scheduled tasks  
+- Analysts must check common persistence locations manually  
+- Context is key when identifying suspicious entries  
+
+---
+
+## 🔥 Why This Matters
+
+This lab demonstrates:
+- Understanding of registry-based persistence techniques  
+- Ability to detect hidden startup entries  
+- Real-world Blue Team investigation skills  
+
+
+
+
+
+
+
+
+
