@@ -32,7 +32,7 @@ Run:
 - Executes a command using cmd.exe  
 
 In a real attack, this could be malware instead of calc.exe.
-
+![CMD Update](./images/cmdupdate.png)
 ---
 
 ## 🔎 Step 2 — Quickly Find the Task
@@ -64,7 +64,7 @@ Run:
 - Schedule  
 - Author  
 - Run As User  
-
+![CMD Update2](./images/cmdupdate2.png)
 ---
 
 ## 🚨 Step 4 — Why This is Suspicious
@@ -87,7 +87,7 @@ Task Scheduler Library
 
 Find:
 Updater
-
+![Task Scheduler](./images/taskschd1.png)
 ---
 
 ## ⚠️ Step 6 — Enable Logging
@@ -118,7 +118,7 @@ TaskScheduler → Operational
 
 Filter:
 Event ID 106
-
+![Event Viewer](./images/eventv.png)
 ---
 
 ## 🧠 Analyst Explanation
